@@ -3,7 +3,7 @@
 ### Configuring proxy made simple on Linux
 This is a fork from the original [ProxyMan](https://github.com/himanshub16/ProxyMan) written by [Himanshu Shekhar](https://github.com/himanshub16). The main changes are:
 
-* Added an option to set up the proxy configuration file that would be set by the OS GUI. This is needed by some programs (e.g., Google Chrome) to work properly behind a proxy.
+* Added an option to set up the proxy configuration file that would be set by the OS GUI. This is needed by some programs (e.g., Google Chrome) to work properly behind a proxy. Tested in Kubuntu 18.04.
 * Added bash completition.
 * Given the choice not to set a proxy for HTTPS or FTP connections
 * Corrected some minor bugs.
