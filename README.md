@@ -11,7 +11,7 @@ This is a fork from the original [ProxyMan](https://github.com/himanshub16/Proxy
 
 ## How to use it
 [![asciicast](https://asciinema.org/a/CVha4PPMdjkU7a1XihD9PItrz.png)](https://asciinema.org/a/CVha4PPMdjkU7a1XihD9PItrz)
-(video refers to the original [ProxyMan] (https://github.com/himanshub16/ProxyMan))
+(video refers to the original [ProxyMan](https://github.com/himanshub16/ProxyMan))
 
 * Install with single-step process.
 ```./install```
