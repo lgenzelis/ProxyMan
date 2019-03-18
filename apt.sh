@@ -17,7 +17,7 @@ list_proxy() {
     echo "${bold}APT proxy settings : ${normal}"
     lines="$(cat $CONF_FILE | grep proxy -i | wc -l)"
     if [ "$lines" -gt 0 ]; then
-        cat "$CONF_FILE" | grep proxy -i | wc -l
+        cat "$CONF_FILE" | grep proxy -i
     else
         echo "${red}None${normal}"
     fi
@@ -46,10 +46,14 @@ set_proxy() {
     # caution: do not use / after stmt
     echo "Acquire::Http::Proxy \"http://${stmt}${http_host}:${http_port}\";" \
          >> "$CONF_FILE"
-    echo "Acquire::Https::Proxy \"https://${stmt}${https_host}:${https_port}\";" \
-         >> "$CONF_FILE"
-    echo "Acquire::Ftp::Proxy \"ftp://${stmt}${ftp_host}:${ftp_port}\";" \
-         >> "$CONF_FILE"
+    if [ -n "$https_host" ]; then
+        echo "Acquire::Https::Proxy \"https://${stmt}${https_host}:${https_port}\";" \
+            >> "$CONF_FILE"
+    fi
+    if [ -n "$ftp_host" ]; then
+        echo "Acquire::Ftp::Proxy \"ftp://${stmt}${ftp_host}:${ftp_port}\";" \
+            >> "$CONF_FILE"
+    fi
 }
 
 

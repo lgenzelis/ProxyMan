@@ -24,11 +24,18 @@ mkdir -p $HOME/.local/bin
 cp proxyman $HOME/.local/bin
 chmod +x $HOME/.local/bin/proxyman
 
+# add autocompletition information to .bashrc
+echo "source $TARGET_DIR/proxyman_bash_completition.sh" >> $HOME/.bashrc
+
 which proxyman &> /dev/null
 if [ "$?" != 0 ]; then
-    echo "Failed to install :("
-    echo "You can still use it > ./main.sh set"
-    exit
+    which "$HOME/.local/bin/proxyman" &> /dev/null
+    if [ "$?" != 0 ]; then
+        echo "Failed to install :("
+        echo "You can still use it > ./main.sh set"
+    else
+        echo 'Instalation was successful, but ~/.local/bin/ is not in your $PATH. Things will probably work fine after your next login. In the meantime, you can source ~/.profile before running proxyman.'
+    fi
+else
+    echo "Installed successfully."
 fi
-
-echo "Installed successfully."

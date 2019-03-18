@@ -54,11 +54,13 @@ set_proxy() {
     if [ "$USE_HTTP_PROXY_FOR_HTTPS" = "true" ]; then
         echo 'Environment="HTTP_PROXY=http://'${stmt}${http_host}:${http_port}'/" "HTTPS_PROXY=http://'${stmt}${https_host}:${https_port}'/" "NO_PROXY='${no_proxy}'"'\
              >> $CONF_FILE
-    else
+    elif [ -n "$https_host" ]; then
         echo 'Environment="HTTP_PROXY=http://'${stmt}${http_host}:${http_port}'/" "HTTPS_PROXY=https://'${stmt}${https_host}:${https_port}'/" "NO_PROXY='${no_proxy}'"'\
              >> $CONF_FILE
+    else
+        echo 'Environment="HTTP_PROXY=http://'${stmt}${http_host}:${http_port}'/" "NO_PROXY='${no_proxy}'"'\
+             >> $CONF_FILE
     fi
-
 
     return
 }

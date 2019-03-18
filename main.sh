@@ -24,6 +24,7 @@ function _do_it_for_all() {
         bash "npm.sh" "$what_to_do"
         bash "dropbox.sh" "$what_to_do"
         bash "git.sh" "$what_to_do"
+        bash "system_proxy.sh" "$what_to_do"
 
         # isn't required, but still checked to avoid sudo in main all the time
         SUDO_CMDS="apt dnf docker"
@@ -40,20 +41,20 @@ function _do_it_for_all() {
                 #    ;;
                 2) bash "bash-zsh.sh" "$what_to_do"
                    ;;
-                3) sudo -E bash "environment.sh" "$what_to_do"
-                   ;;
-                4) sudo -E bash "apt.sh" "$what_to_do"
+                3) sudo -E bash "apt.sh" "$what_to_do"
                    sudo -E bash "dnf.sh" "$what_to_do"
                    ;;
-                5) bash "gsettings.sh" "$what_to_do"
+                4) bash "gsettings.sh" "$what_to_do"
                    ;;
-                6) bash "npm.sh" "$what_to_do"
+                5) bash "npm.sh" "$what_to_do"
                    ;;
-                7) bash "dropbox.sh" "$what_to_do"
+                6) bash "dropbox.sh" "$what_to_do"
                    ;;
-                8) bash "git.sh" "$what_to_do"
+                7) bash "git.sh" "$what_to_do"
                    ;;
-                9) sudo -E bash "docker.sh" "$what_to_do"
+                8) sudo -E bash "docker.sh" "$what_to_do"
+                   ;;
+                9) bash "system_proxy.sh" "$what_to_do"
                    ;;
                 *) ;;
             esac
@@ -109,10 +110,14 @@ function prompt_for_proxy_values() {
         https_port=$http_port
         ftp_port=$http_port
     else
-        echo -n " HTTPS Proxy ${bold} Host ${normal}"; read https_host
-        echo -n " HTTPS Proxy ${bold} Port ${normal}"; read https_port
-        echo -n " FTP Proxy ${bold} Host ${normal}"; read ftp_host
-        echo -n " FTP Proxy ${bold} Port ${normal}"; read ftp_port
+        echo -n " HTTPS Proxy ${bold} Host ${normal}(press Enter to skip) "; read https_host
+        if [ -n "$https_host" ]; then
+            echo -n " HTTPS Proxy ${bold} Port ${normal}"; read https_port
+        fi
+        echo -n " FTP Proxy ${bold} Host ${normal}(press Enter to skip) "; read ftp_host
+        if [ -n "$ftp_host" ]; then
+            echo -n " FTP Proxy ${bold} Port ${normal}"; read ftp_port
+        fi
     fi
     # socks_proxy is omitted, as is usually not required
     # rsync is kept same as http to reduce number of inputs in interactive mode
@@ -139,13 +144,13 @@ function prompt_for_proxy_targets() {
 
     echo "|${bold}${red} 1 ${normal}| All of them ... Don't bother me"
     echo "|${bold}${red} 2 ${normal}| Terminal / bash / zsh (current user) "
-    echo "|${bold}${red} 3 ${normal}| /etc/environment"
-    echo "|${bold}${red} 4 ${normal}| apt/dnf (Package manager)"
-    echo "|${bold}${red} 5 ${normal}| Desktop settings (GNOME/Ubuntu)"
-    echo "|${bold}${red} 6 ${normal}| npm & yarn"
-    echo "|${bold}${red} 7 ${normal}| Dropbox"
-    echo "|${bold}${red} 8 ${normal}| Git"
-    echo "|${bold}${red} 9 ${normal}| Docker"
+    echo "|${bold}${red} 3 ${normal}| apt/dnf (Package manager)"
+    echo "|${bold}${red} 4 ${normal}| Desktop settings (GNOME/Ubuntu)"
+    echo "|${bold}${red} 5 ${normal}| npm & yarn"
+    echo "|${bold}${red} 6 ${normal}| Dropbox"
+    echo "|${bold}${red} 7 ${normal}| Git"
+    echo "|${bold}${red} 8 ${normal}| Docker"
+    echo "|${bold}${red} 9 ${normal}| Ubuntu GUI Proxy"
     echo
     echo "Separate multiple choices with space"
     echo -ne "\e[5m ? \e[0m" ; read targets
