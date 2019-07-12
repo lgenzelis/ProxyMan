@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd $HOME/.proxyman
+cd "$HOME"/.proxyman
 ./main.sh $@
-cd $OLDPWD
+cd "$OLDPWD"
